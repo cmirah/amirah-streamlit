@@ -20,24 +20,23 @@ LOGGER = get_logger(__name__)
 
 def run():
     st.set_page_config(
-        page_title="Hello",
-        page_icon="👋",
+        page_title="Web-Based",
+        page_icon=":balloon:",
     )
 
-    st.write("# Welcome to Streamlit! 👋")
+    st.write("# :balloon: Welcome to Web-Based! 👋")
 
-    st.sidebar.success("Select a demo above.")
+    st.sidebar.success("Select an option above.")
 
     st.markdown(
         """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
+        This web-based app is an aplication used to predict the number of COVID-19 disease that will be occured in the future.
         **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
+        of what this app can do!
+        ### More information
+        - Data from [MoH-Malaysia](https://github.com/MoH-Malaysia/covid19-public.git)
+        - Jump into my [amirah's app](https://share.streamlit.io/)
+        - Ask a question in Streamlit's [community
           forums](https://discuss.streamlit.io)
         ### See more complex demos
         - Use a neural net to [analyze the Udacity Self-driving Car Image
