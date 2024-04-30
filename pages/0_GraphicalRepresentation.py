@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+## Total number of population in Malaysia in 2023
+totalPopulation = 34308525
+
+## number of days
+T = 100
+
 import matplotlib.pyplot as plt
 import numpy as np
 
