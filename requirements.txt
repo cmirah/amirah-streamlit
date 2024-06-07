@@ -6,4 +6,4 @@ streamlit
 matplotlib
 seaborn
 sklearn
-pip install plotly
+plotly
