@@ -40,7 +40,8 @@ def run():
         ### More information
         - Data from [MoH-Malaysia](https://github.com/MoH-Malaysia/covid19-public.git)
         - Jump into my [amirah's app](https://share.streamlit.io/)
-        - Web-Based apps solely developed by ***Amirah Alysha bt Azman*** in completion of Final Year Project II
+        - This Web-Based apps is solely developed by 
+        ***Amirah Alysha bt Azman*** in completion of Final Year Project II
     """
     )
 
