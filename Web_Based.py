@@ -43,10 +43,10 @@ def run():
         - Data from [MoH-Malaysia](https://github.com/MoH-Malaysia/covid19-public.git)
         - Jump into my [amirah's app](https://share.streamlit.io/)
         - Visit my Python coding for each S-I-R-F Prediction:
-        [Susceptible Prediction](https://colab.research.google.com/drive/1aclFhSdOjodKFvyAKyfxm53u8HhGLGPy?usp=sharing)
-        [Infected Prediction](https://colab.research.google.com/drive/1uVmQawkhqjRUMAzVYZ4pwdc0aV4wbUvG?usp=sharing)
-        [Recovered Prediction](https://colab.research.google.com/drive/1rDhDSnG38JYtLy42Kc0o09gL5jNvuIF9?usp=sharing)
-        [Fatal Prediction](https://colab.research.google.com/drive/1BhEDXYKhtgjf3yj9F-s8_ytwfI15B1e1?usp=sharing)
+        [Susceptible](https://colab.research.google.com/drive/1aclFhSdOjodKFvyAKyfxm53u8HhGLGPy?usp=sharing)
+        [Infected](https://colab.research.google.com/drive/1uVmQawkhqjRUMAzVYZ4pwdc0aV4wbUvG?usp=sharing)
+        [Recovered](https://colab.research.google.com/drive/1rDhDSnG38JYtLy42Kc0o09gL5jNvuIF9?usp=sharing)
+        [Fatal](https://colab.research.google.com/drive/1BhEDXYKhtgjf3yj9F-s8_ytwfI15B1e1?usp=sharing)
         
         
         
