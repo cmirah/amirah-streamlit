@@ -6,4 +6,4 @@ streamlit
 matplotlib
 seaborn
 sklearn
-plotly
+plotly.express
