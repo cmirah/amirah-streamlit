@@ -38,7 +38,7 @@ def run():
         **👈 Select a demo from the sidebar** to see some examples
         of what this app can do!
         ### More information
-        - This Web-Based apps is solely developed by 
+        - This Web-based apps is solely developed by 
         ***Amirah Alysha bt Azman*** in completion of Final Year Project II
         - Data from [MoH-Malaysia](https://github.com/MoH-Malaysia/covid19-public.git)
         - Jump into my [amirah's app](https://share.streamlit.io/)
