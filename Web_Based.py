@@ -24,7 +24,7 @@ def run():
         page_icon=":balloon:",
     )
 
-    st.write("# 👋 Smart SIR-F : Prediction SIR-F Model of Covid-19 App 👩‍💻")
+    st.write("# 👋 Prediction SIR-F Model of Covid-19 App 👩‍💻")
 
     #image
     st.image("WEBCoronavirus.png",width=500)
