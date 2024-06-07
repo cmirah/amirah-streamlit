@@ -5,3 +5,5 @@ pydeck
 streamlit
 matplotlib
 seaborn
+sklearn
+plotly
