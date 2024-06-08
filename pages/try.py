@@ -11,9 +11,14 @@ title_font = ImageFont.load_default()
 section_font = ImageFont.load_default()
 text_font = ImageFont.load_default()
 
+# Function to calculate text size
+def get_text_size(draw, text, font):
+    bbox = draw.textbbox((0, 0), text, font=font)
+    return bbox[2] - bbox[0], bbox[3] - bbox[1]
+
 # Title
 title_text = "Machine Learning Workflow"
-title_width, title_height = draw.textsize(title_text, font=title_font)
+title_width, title_height = get_text_size(draw, title_text, title_font)
 draw.text(((width - title_width) / 2, 10), title_text, fill="black", font=title_font)
 
 # Section Titles
@@ -22,7 +27,7 @@ section_positions = [(50, 60), (250, 60), (450, 60), (650, 60)]
 
 for section, position in zip(sections, section_positions):
     draw.rectangle([position, (position[0] + 150, position[1] + 50)], outline="black", width=2)
-    text_width, text_height = draw.textsize(section, font=section_font)
+    text_width, text_height = get_text_size(draw, section, section_font)
     draw.text((position[0] + (150 - text_width) / 2, position[1] + (50 - text_height) / 2), section, fill="black", font=section_font)
 
 # Arrows
@@ -31,9 +36,9 @@ arrow_texts = ["Train Model", "Deploy Model", "Run in Production"]
 
 for position, text in zip(arrow_positions, arrow_texts):
     draw.line([position, (position[0] + 50, position[1])], fill="black", width=2)
-    draw.polygon([position, (position[0] + 10, position[1] - 10), (position[0] + 10, position[1] + 10)], fill="black")
-    text_width, text_height = draw.textsize(text, font=text_font)
-    draw.text((position[0] - text_width / 2 + 25, position[1] + 10), text, fill="black", font=text_font)
+    draw.polygon([position, (position[0] + 50, position[1] - 5), (position[0] + 50, position[1] + 5), (position[0] + 60, position[1])], fill="black")
+    text_width, text_height = get_text_size(draw, text, text_font)
+    draw.text((position[0] + 25 - text_width / 2, position[1] + 10), text, fill="black", font=text_font)
 
 # Descriptions
 descriptions = [
@@ -47,11 +52,10 @@ description_positions = [(50, 120), (250, 120), (450, 120), (650, 120)]
 
 for description, position in zip(descriptions, description_positions):
     for i, line in enumerate(description):
-        text_width, text_height = draw.textsize(line, font=text_font)
+        text_width, text_height = get_text_size(draw, line, text_font)
         draw.text((position[0] + (150 - text_width) / 2, position[1] + i * 20), line, fill="black", font=text_font)
 
 # Save and display the image
 image_path = "/mnt/data/ml_workflow.png"
 image.save(image_path)
 st.image(image_path, caption="Machine Learning Workflow")
-
