@@ -17,6 +17,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 import numpy as np
 
+# Set page configuration
 st.set_page_config(page_icon="📈")
 
 # Sidebar for navigation
@@ -25,32 +26,38 @@ page = st.sidebar.selectbox('Select Page', ['Information', 'Model Simulation'])
 
 if page == 'Information':
     # Information Section
-    st.title(f"The basic SIR model and the derived SIR-F")
+    st.title("The basic SIR model and the derived SIR-F")
     st.subheader("Mathematical Model of SIR-F")
+    
     st.write("1) SIR-F Model:")
-    st.markdown("- S: Susceptible = (Total Population - Confirmed)")
-    st.markdown("- I: Infected = (Confirmed - Recovered - Fatal)")
-    st.markdown("- R: Recovered")
-    st.markdown("- F: Fatal")
-
+    st.markdown("""
+    - **S: Susceptible** = (Total Population - Confirmed)
+    - **I: Infected** = (Confirmed - Recovered - Fatal)
+    - **R: Recovered**
+    - **F: Fatal**
+    """)
+    
     st.write("2) Model Relationship:")
     st.latex(r"S \rightarrow \beta I \rightarrow \gamma R , I \rightarrow \alpha F")
     st.write("where the parameters used are:")
-    st.markdown("- α : Mortality rate")
-    st.markdown("- β : Effective contact rate")
-    st.markdown("- γ : Recovery rate")
-
+    st.markdown("""
+    - **α : Mortality rate**
+    - **β : Effective contact rate**
+    - **γ : Recovery rate**
+    """)
+    
     st.write("3)")
     st.image("1.png", width=500)
     st.write("where: N is the total population & t is the elapsed time from the start date.")
+    
     st.write("4)")
     st.image("2.png", width=500)
     st.write("where: α1 = mortality rate of S*, α2 = mortality rate of I and N = S + I + R + F.")
-    st.markdown(
-        """
-        **👈 Select a button from the sidebar** to see the simulation graph of the models!
-    """
-    )
+    
+    st.markdown("""
+    **👈 Select a button from the sidebar** to see the simulation graph of the models!
+    """)
+
 
 def modelSIRF(X0, beta, gamma, alpha1, alpha2, T, stepCount):
     def func(X):
@@ -129,5 +136,3 @@ if page == 'Model Simulation':
 
     if __name__ == "__main__":
         main()
-
-
