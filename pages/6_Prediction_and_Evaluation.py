@@ -11,7 +11,7 @@ st.set_page_config(page_title="Evaluation Performance", page_icon="📜")
 
 # Title and Image
 st.title("Prediction & Evaluation")
-st.image("wb2.webp", width=500)
+st.image("10.jpg", width=500)
 
 # Function to train and evaluate the model
 def train_model(df, features, target):
