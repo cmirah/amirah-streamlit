@@ -17,42 +17,44 @@ from streamlit.logger import get_logger
 
 LOGGER = get_logger(__name__)
 
-
 def run():
     st.set_page_config(
-        page_title="Web-Based",
+        page_title="Epidemic Forecast Pro App",
         page_icon=":balloon:",
+        layout="centered"
     )
 
-    st.write("# 👋 Epidemic Forecast Pro App 👩‍💻")
+    st.title("👋 Epidemic Forecast Pro App 👩‍💻")
 
-    #image
-    st.image("WEBCoronavirus.png",width=500)
+    # Display image
+    st.image("WEBCoronavirus.png", width=500)
 
-    #title
+    # Sidebar and title
     st.sidebar.success("Select an option above.")
 
     st.markdown(
         """
-        This web-based app is an application used to predict the number of **COVID-19 disease** that will be occured in the future.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what this app can do!
-        ### More information
-        - This Web-based apps is solely developed by 
-        **Amirah Alysha bt Azman** in completion of Final Year Project II
-        - Data from [MoH-Malaysia](https://github.com/MoH-Malaysia/covid19-public.git)
-        - Jump into my [amirah's app](https://share.streamlit.io/)
-        - Visit my Python coding for each S-I-R-F Prediction:
-        [Susceptible](https://colab.research.google.com/drive/1aclFhSdOjodKFvyAKyfxm53u8HhGLGPy?usp=sharing)
-        [Infected](https://colab.research.google.com/drive/1uVmQawkhqjRUMAzVYZ4pwdc0aV4wbUvG?usp=sharing)
-        [Recovered](https://colab.research.google.com/drive/1rDhDSnG38JYtLy42Kc0o09gL5jNvuIF9?usp=sharing)
-        [Fatal](https://colab.research.google.com/drive/1BhEDXYKhtgjf3yj9F-s8_ytwfI15B1e1?usp=sharing)
+        Welcome to the **Epidemic Forecast Pro App**. This web-based application predicts the number of COVID-19 cases in the future.
         
-        
-        
+        **👈 Select a demo from the sidebar** to explore the features of this app!
+        """
+    )
+
+    st.header("More Information")
+    st.markdown(
+        """
+        - This application was developed by **Amirah Alysha bt Azman** as part of her Final Year Project II.
+        - Data sourced from the [MoH-Malaysia](https://github.com/MoH-Malaysia/covid19-public.git).
+        - Check out the [App Deployment](https://share.streamlit.io/).
+        - Detailed Python coding for each S-I-R-F Prediction can be found here:
     """
     )
 
+    st.markdown("- [Susceptible](https://colab.research.google.com/drive/1aclFhSdOjodKFvyAKyfxm53u8HhGLGPy?usp=sharing)")
+    st.markdown("- [Infected](https://colab.research.google.com/drive/1uVmQawkhqjRUMAzVYZ4pwdc0aV4wbUvG?usp=sharing)")
+    st.markdown("- [Recovered](https://colab.research.google.com/drive/1rDhDSnG38JYtLy42Kc0o09gL5jNvuIF9?usp=sharing)")
+    st.markdown("- [Fatal](https://colab.research.google.com/drive/1BhEDXYKhtgjf3yj9F-s8_ytwfI15B1e1?usp=sharing)")
 
 if __name__ == "__main__":
     run()
+
