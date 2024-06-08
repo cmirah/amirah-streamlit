@@ -7,9 +7,9 @@ image = Image.new('RGB', (width, height), 'white')
 draw = ImageDraw.Draw(image)
 
 # Define fonts
-title_font = ImageFont.truetype("arial.ttf", 24)
-section_font = ImageFont.truetype("arial.ttf", 18)
-text_font = ImageFont.truetype("arial.ttf", 14)
+title_font = ImageFont.load_default()
+section_font = ImageFont.load_default()
+text_font = ImageFont.load_default()
 
 # Title
 title_text = "Machine Learning Workflow"
@@ -51,5 +51,7 @@ for description, position in zip(descriptions, description_positions):
         draw.text((position[0] + (150 - text_width) / 2, position[1] + i * 20), line, fill="black", font=text_font)
 
 # Save and display the image
-image.save("/mnt/data/ml_workflow.png")
-st.image("/mnt/data/ml_workflow.png", caption="Machine Learning Workflow")
+image_path = "/mnt/data/ml_workflow.png"
+image.save(image_path)
+st.image(image_path, caption="Machine Learning Workflow")
+
