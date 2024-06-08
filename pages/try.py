@@ -1,5 +1,6 @@
 import streamlit as st
 from PIL import Image, ImageDraw, ImageFont
+import io
 
 # Create a blank image with white background
 width, height = 800, 400
@@ -55,7 +56,10 @@ for description, position in zip(descriptions, description_positions):
         text_width, text_height = get_text_size(draw, line, text_font)
         draw.text((position[0] + (150 - text_width) / 2, position[1] + i * 20), line, fill="black", font=text_font)
 
-# Save and display the image
-image_path = "/mnt/data/ml_workflow.png"
-image.save(image_path)
-st.image(image_path, caption="Machine Learning Workflow")
+# Convert the image to a byte array
+img_byte_arr = io.BytesIO()
+image.save(img_byte_arr, format='PNG')
+img_byte_arr = img_byte_arr.getvalue()
+
+# Display the image in Streamlit
+st.image(img_byte_arr, caption="Machine Learning Workflow")
