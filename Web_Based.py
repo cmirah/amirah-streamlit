@@ -34,7 +34,7 @@ def run():
 
     st.markdown(
         """
-        This web-based app is an application used to predict the number of COVID-19 disease that will be occured in the future.
+        This web-based app is an application used to predict the number of **COVID-19 disease** that will be occured in the future.
         **👈 Select a demo from the sidebar** to see some examples
         of what this app can do!
         ### More information
