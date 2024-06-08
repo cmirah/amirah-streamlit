@@ -26,9 +26,9 @@ page = st.sidebar.selectbox('Select Page', ['Information', 'Model Simulation'])
 
 if page == 'Information':
     # Information Section
-    st.header("Machine Learning Workflow")
+    st.title("Machine Learning Workflow")
     st.image("11.jpg", width=500)
-    st.header("The basic SIR model and the derived SIR-F")
+    st.title("The basic SIR model and the derived SIR-F")
     st.subheader("Mathematical Model of SIR-F")
     
     st.write("1) SIR-F Model:")
