@@ -100,7 +100,7 @@ def main():
             st.pyplot(fig)
         else:
             st.error("Please preprocess the data before training the model.")
-        
+    
     if st.button("Evaluate Model"):
         if 'model' in st.session_state and 'x_valid' in st.session_state and 'y_valid' in st.session_state and 'scaler_y' in st.session_state:
             y_pred, MAE, MSE, RMSE, MAPE = evaluate_model(
@@ -125,7 +125,7 @@ def main():
             st.pyplot(fig)
         else:
             st.error("Please train the model before evaluating.")
-        
+
 # Run the app
 if __name__ == "__main__":
     main()
