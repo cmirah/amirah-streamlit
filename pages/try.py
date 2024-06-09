@@ -3,14 +3,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-import tensorflow as tf
-
-# Suppress TensorFlow logging
-tf.get_logger().setLevel('ERROR')
 
 st.set_page_config(page_title="Evaluation Performance", page_icon="📜")
 
@@ -28,16 +23,11 @@ def train_model(df, features, target):
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    model = Sequential()
-    model.add(Dense(64, input_dim=len(features), activation='relu'))
-    model.add(Dense(32, activation='relu'))
-    model.add(Dense(1, activation='linear'))
-    model.compile(loss='mean_squared_error', optimizer='adam')
+    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model.fit(X_train_scaled, y_train)
 
-    model.fit(X_train_scaled, y_train, epochs=100, batch_size=10, verbose=0)
-
-    y_pred_train = model.predict(X_train_scaled).flatten()
-    y_pred_test = model.predict(X_test_scaled).flatten()
+    y_pred_train = model.predict(X_train_scaled)
+    y_pred_test = model.predict(X_test_scaled)
 
     evaluation = {
         'MAE Train': mean_absolute_error(y_train, y_pred_train),
@@ -53,7 +43,7 @@ def train_model(df, features, target):
 # Function to predict using the trained model
 def predict(model, scaler, input_data):
     input_data_scaled = scaler.transform(np.array([input_data]))
-    prediction = model.predict(input_data_scaled).flatten()
+    prediction = model.predict(input_data_scaled)
     return prediction[0]
 
 def main():
