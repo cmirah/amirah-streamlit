@@ -57,6 +57,9 @@ def main():
     file_path = 'cases_malaysia.csv'
     df = pd.read_csv(file_path)
 
+    # Convert date column to datetime
+    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+
     # Train model and get evaluation metrics
     model, scaler, evaluation, y_train, y_test, y_pred_train, y_pred_test = train_model(df)
 
@@ -86,7 +89,6 @@ def main():
 
     # Plotting the predicted vs actual values as a line graph
     st.subheader("Predicted vs Actual")
-    df['date'] = pd.to_datetime(df['date'])
     fig, ax = plt.subplots()
     ax.plot(df['date'][:len(y_test)], y_test, label='Actual', alpha=0.6)
     ax.plot(df['date'][:len(y_test)], y_pred_test, label='Predicted', alpha=0.6)
