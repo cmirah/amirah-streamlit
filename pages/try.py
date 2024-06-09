@@ -50,6 +50,7 @@ def main():
     # Read the CSV file
     file_path = 'cases_malaysia.csv'
     df = pd.read_csv(file_path)
+    df['date'] = pd.to_datetime(df['date'])
 
     # Initial input values for [S, I, R, F]
     initial_values = [10000000, 1000, 1000, 0]
@@ -72,24 +73,23 @@ def main():
             # Plotting the loss function graph (MSE) for train and test sets
             st.subheader(f"{section} Loss Function")
             model, scaler, evaluation, y_train, y_test, y_pred_train, y_pred_test = train_model(df, params['features'], params['target'])
-            
-            # Residuals plot
+
             fig, ax = plt.subplots()
-            ax.scatter(y_train, y_train - y_pred_train, color='blue', label='Train', alpha=0.6)
-            ax.scatter(y_test, y_test - y_pred_test, color='red', label='Test', alpha=0.6)
-            ax.axhline(y=0, color='black', linestyle='-', linewidth=2)
+            ax.plot(y_train, y_train - y_pred_train, 'o', label='Train', alpha=0.6)
+            ax.plot(y_test, y_test - y_pred_test, 'o', label='Test', alpha=0.6)
+            ax.axhline(y=0, color='r', linestyle='-')
             ax.set_xlabel('Actual Values')
             ax.set_ylabel('Residuals')
-            ax.set_title(f"Loss Function (Residuals) - {section}")
+            ax.set_title(f"Loss Function (Residuals)")
             ax.legend()
             st.pyplot(fig)
 
-            # Predicted vs actual plot
-            st.subheader(f"{section} Predicted vs Actual")
+            # Plotting the predicted vs actual values as a line graph with date on x-axis
+            st.subheader(f"Predicted vs Actual")
             fig, ax = plt.subplots()
-            ax.plot(y_test.values, label='Actual', color='blue', alpha=0.6)
-            ax.plot(y_pred_test, label='Predicted', color='red', alpha=0.6)
-            ax.set_xlabel('Index')
+            ax.plot(df['date'][y_test.index], y_test.values, label='Actual', alpha=0.6)
+            ax.plot(df['date'][y_test.index], y_pred_test, label='Predicted', alpha=0.6)
+            ax.set_xlabel('Date')
             ax.set_ylabel(f'{section} Values')
             ax.set_title(f"{section} Predicted vs Actual")
             ax.legend()
