@@ -9,7 +9,7 @@ st.title("Prediction of COVID-19 Disease using SIRF Model")
 
 def train_model(df, target):
     # Feature engineering and preprocessing
-    X = df[['infected', 'recovered', 'fatal']]
+    X = df[['susceptible','infected', 'recovered', 'fatal','date']]
     y = df[target]
     # Standardize features
     scaler = StandardScaler()
