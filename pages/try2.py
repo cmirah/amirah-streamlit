@@ -39,7 +39,7 @@ def preprocess_data(df):
 def build_and_train_model(x_train, y_train, epochs=100):
     with tf.name_scope('Model'):
         model = Sequential()
-        model.add(Dense(x_train.shape[1], input_dim=x_train.shape[-1], kernel_initializer='normal', activation='relu'))
+        model.add(Dense(4, input_dim=4, kernel_initializer='normal', activation='relu'))
         model.add(Dense(70, activation='relu'))
         model.add(Dense(1, activation='linear'))
         
@@ -65,7 +65,7 @@ def evaluate_model(model, x_valid, y_valid, scaler_y):
 # Main function
 def main():
     st.title("SIR-F Model Prediction")
-
+    
     file_path = st.text_input("Enter the path to the CSV file", "cases_malaysia.csv")
     
     if st.button("Load and Preprocess Data"):
