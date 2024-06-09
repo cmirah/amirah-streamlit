@@ -50,7 +50,9 @@ def main():
     # Read the CSV file
     file_path = 'cases_malaysia.csv'
     df = pd.read_csv(file_path)
-    df['date'] = pd.to_datetime(df['date'])
+
+    # Convert 'date' column to datetime, handling errors
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')
 
     # Initial input values for [S, I, R, F]
     initial_values = [10000000, 1000, 1000, 0]
@@ -116,3 +118,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
