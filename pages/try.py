@@ -3,16 +3,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-import tensorflow as tf
-import os
-
-# Suppress TensorFlow logging
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-tf.get_logger().setLevel('ERROR')
 
 st.set_page_config(page_title="Evaluation Performance", page_icon="📜")
 
@@ -30,16 +23,11 @@ def train_model(df, features, target):
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
 
-    model = Sequential()
-    model.add(Dense(64, input_dim=len(features), activation='relu'))
-    model.add(Dense(32, activation='relu'))
-    model.add(Dense(1, activation='linear'))
-    model.compile(loss='mean_squared_error', optimizer='adam')
+    model = RandomForestRegressor()
+    model.fit(X_train_scaled, y_train)
 
-    model.fit(X_train_scaled, y_train, epochs=100, batch_size=10, verbose=0)
-
-    y_pred_train = model.predict(X_train_scaled).flatten()
-    y_pred_test = model.predict(X_test_scaled).flatten()
+    y_pred_train = model.predict(X_train_scaled)
+    y_pred_test = model.predict(X_test_scaled)
 
     evaluation = {
         'MAE Train': mean_absolute_error(y_train, y_pred_train),
@@ -55,7 +43,7 @@ def train_model(df, features, target):
 # Function to predict using the trained model
 def predict(model, scaler, input_data):
     input_data_scaled = scaler.transform(np.array([input_data]))
-    prediction = model.predict(input_data_scaled).flatten()
+    prediction = model.predict(input_data_scaled)
     return prediction[0]
 
 def main():
@@ -68,10 +56,10 @@ def main():
 
     # Sections for each prediction (S, I, R, F)
     sections = {
-        'Susceptible': {'features': ['susceptible','infected', 'recovered', 'fatal'], 'target': 'susceptible', 'initial_values': initial_values},
-        'Infected': {'features': ['susceptible', 'infected','recovered', 'fatal'], 'target': 'infected', 'initial_values': initial_values},
-        'Recovered': {'features': ['susceptible', 'infected','recovered', 'fatal'], 'target': 'recovered', 'initial_values': initial_values},
-        'Fatal': {'features': ['susceptible', 'infected', 'recovered','fatal'], 'target': 'fatal', 'initial_values': initial_values}
+        'Susceptible': {'features': ['susceptible', 'infected', 'recovered', 'fatal'], 'target': 'susceptible', 'initial_values': initial_values},
+        'Infected': {'features': ['susceptible', 'infected', 'recovered', 'fatal'], 'target': 'infected', 'initial_values': initial_values},
+        'Recovered': {'features': ['susceptible', 'infected', 'recovered', 'fatal'], 'target': 'recovered', 'initial_values': initial_values},
+        'Fatal': {'features': ['susceptible', 'infected', 'recovered', 'fatal'], 'target': 'fatal', 'initial_values': initial_values}
     }
 
     # Sidebar headers for each S-I-R-F model
@@ -85,23 +73,22 @@ def main():
             st.subheader(f"{section} Loss Function")
             model, scaler, evaluation, y_train, y_test, y_pred_train, y_pred_test = train_model(df, params['features'], params['target'])
             
+            # Residuals plot
             fig, ax = plt.subplots()
-            train_residuals = y_train - y_pred_train
-            test_residuals = y_test - y_pred_test
-            ax.scatter(y_train, train_residuals, label='Train Residuals', alpha=0.6)
-            ax.scatter(y_test, test_residuals, label='Test Residuals', alpha=0.6, color='red')
-            ax.axhline(y=0, color='gray', linestyle='--')
+            ax.scatter(y_train, y_train - y_pred_train, color='blue', label='Train', alpha=0.6)
+            ax.scatter(y_test, y_test - y_pred_test, color='red', label='Test', alpha=0.6)
+            ax.axhline(y=0, color='black', linestyle='-', linewidth=2)
             ax.set_xlabel('Actual Values')
             ax.set_ylabel('Residuals')
-            ax.set_title(f"Loss Function (Residuals)")
+            ax.set_title(f"Loss Function (Residuals) - {section}")
             ax.legend()
             st.pyplot(fig)
 
-            # Plotting the predicted vs actual values as a line graph
-            st.subheader(f"Predicted vs Actual")
+            # Predicted vs actual plot
+            st.subheader(f"{section} Predicted vs Actual")
             fig, ax = plt.subplots()
-            ax.plot(y_test.values, label='Actual', alpha=0.6)
-            ax.plot(y_pred_test, label='Predicted', alpha=0.6)
+            ax.plot(y_test.values, label='Actual', color='blue', alpha=0.6)
+            ax.plot(y_pred_test, label='Predicted', color='red', alpha=0.6)
             ax.set_xlabel('Index')
             ax.set_ylabel(f'{section} Values')
             ax.set_title(f"{section} Predicted vs Actual")
@@ -129,4 +116,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
