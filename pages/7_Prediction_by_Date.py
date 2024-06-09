@@ -29,6 +29,7 @@ def predict_value(model, scaler, inputs):
 
 def main():
     # Input form for new data
+    susceptible = st.number_input('Susceptible', value=10000000)
     infected = st.number_input('Infected', value=1000)
     recovered = st.number_input('Recovered', value=1000)
     fatal = st.number_input('Fatal', value=50)
@@ -81,4 +82,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
