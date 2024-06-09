@@ -15,6 +15,7 @@ st.title("Prediction & Evaluation")
 st.image("10.jpg", width=500)
 
 # Function to train and evaluate the model
+@st.cache(allow_output_mutation=True)
 def train_model(df, features, target):
     X = df[features]
     y = df[target]
