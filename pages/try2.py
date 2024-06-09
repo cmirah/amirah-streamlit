@@ -70,40 +70,63 @@ def main():
         
         x_train, y_train, x_valid, y_valid, scaler_y, y_valid_raw = preprocess_data(df)
         
+        st.session_state['x_train'] = x_train
+        st.session_state['y_train'] = y_train
+        st.session_state['x_valid'] = x_valid
+        st.session_state['y_valid'] = y_valid
+        st.session_state['scaler_y'] = scaler_y
+        st.session_state['y_valid_raw'] = y_valid_raw
+        
         st.write("Data Preprocessed Successfully")
     
     if st.button("Train Model"):
-        epochs = st.number_input("Enter the number of epochs", min_value=100, max_value=5000, value=1000)
-        model, history = build_and_train_model(x_train, y_train, epochs)
-        st.write("Model Trained Successfully")
-        
-        # Plot training loss
-        fig, ax = plt.subplots()
-        ax.plot(history.history['loss'], label='Train Loss')
-        ax.plot(history.history['val_loss'], label='Validation Loss')
-        ax.set_title('Model Loss')
-        ax.set_xlabel('Epochs')
-        ax.set_ylabel('Loss')
-        ax.legend()
-        st.pyplot(fig)
+        if 'x_train' in st.session_state and 'y_train' in st.session_state:
+            epochs = st.number_input("Enter the number of epochs", min_value=100, max_value=5000, value=1000)
+            model, history = build_and_train_model(st.session_state['x_train'], st.session_state['y_train'], epochs)
+            
+            st.session_state['model'] = model
+            st.session_state['history'] = history
+            
+            st.write("Model Trained Successfully")
+            
+            # Plot training loss
+            fig, ax = plt.subplots()
+            ax.plot(history.history['loss'], label='Train Loss')
+            ax.plot(history.history['val_loss'], label='Validation Loss')
+            ax.set_title('Model Loss')
+            ax.set_xlabel('Epochs')
+            ax.set_ylabel('Loss')
+            ax.legend()
+            st.pyplot(fig)
+        else:
+            st.error("Please preprocess the data before training the model.")
         
     if st.button("Evaluate Model"):
-        y_pred, MAE, MSE, RMSE, MAPE = evaluate_model(model, x_valid, y_valid_raw, scaler_y)
+        if 'model' in st.session_state and 'x_valid' in st.session_state and 'y_valid' in st.session_state:
+            y_pred, MAE, MSE, RMSE, MAPE = evaluate_model(
+                st.session_state['model'], 
+                st.session_state['x_valid'], 
+                st.session_state['y_valid_raw'], 
+                st.session_state['scaler_y']
+            )
+            
+            st.write(f"MAE: {MAE:.4f}")
+            st.write(f"MSE: {MSE:.4f}")
+            st.write(f"RMSE: {RMSE:.4f}")
+            st.write(f"MAPE: {MAPE:.4f}")
+            
+            # Plot actual vs predicted
+            df_result = pd.DataFrame({'Actual': st.session_state['y_valid_raw'].flatten(), 'Predicted': y_pred.flatten()})
+            fig, ax = plt.subplots(figsize=(20, 10))
+            df_result.plot(kind='line', ax=ax)
+            ax.set_title('Actual vs Predicted')
+            ax.set_xlabel('Day')
+            ax.set_ylabel('Infected')
+            st.pyplot(fig)
+        else:
+            st.error("Please train the model before evaluating.")
         
-        st.write(f"MAE: {MAE:.4f}")
-        st.write(f"MSE: {MSE:.4f}")
-        st.write(f"RMSE: {RMSE:.4f}")
-        st.write(f"MAPE: {MAPE:.4f}")
-        
-        # Plot actual vs predicted
-        df_result = pd.DataFrame({'Actual': y_valid_raw.flatten(), 'Predicted': y_pred.flatten()})
-        fig, ax = plt.subplots(figsize=(20, 10))
-        df_result.plot(kind='line', ax=ax)
-        ax.set_title('Actual vs Predicted')
-        ax.set_xlabel('Day')
-        ax.set_ylabel('Infected')
-        st.pyplot(fig)
-
 # Run the app
 if __name__ == "__main__":
     main()
+
