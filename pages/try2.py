@@ -50,7 +50,11 @@ def build_and_train_model(x_train, y_train, epochs=100):
     return model, history
 
 # Evaluate the model
+
 def evaluate_model(model, x_valid, y_valid, scaler_y):
+    # Reshape x_valid to match the expected input shape
+    x_valid = np.reshape(x_valid, (x_valid.shape[0], -1))
+    
     y_pred_scale = model.predict(x_valid)
     y_pred = scaler_y.inverse_transform(y_pred_scale)
     
@@ -60,6 +64,7 @@ def evaluate_model(model, x_valid, y_valid, scaler_y):
     MAPE = np.mean(np.abs((y_valid - y_pred) / y_valid)) * 100
     
     return y_pred, MAE, MSE, RMSE, MAPE
+
 
 # Main function to run the Streamlit app
 def main():
