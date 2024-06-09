@@ -6,6 +6,7 @@ from sklearn.metrics import mean_absolute_error, mean_squared_error
 from keras.models import Sequential
 from keras.layers import Dense
 import matplotlib.pyplot as plt
+import tensorflow as tf
 
 # Load the data
 @st.cache
@@ -36,13 +37,15 @@ def preprocess_data(df):
 
 # Build and train the model
 def build_and_train_model(x_train, y_train, epochs=100):
-    model = Sequential()
-    model.add(Dense(x_train.shape[1], input_dim=x_train.shape[-1], kernel_initializer='normal', activation='relu'))
-    model.add(Dense(70, activation='relu'))
-    model.add(Dense(1, activation='linear'))
-    
-    model.compile(loss='mse', optimizer='adam', metrics=['mse','mae'])
-    history = model.fit(x_train, y_train, epochs=epochs, batch_size=150, verbose=0, validation_split=0.2)
+    with tf.name_scope('Model'):
+        model = Sequential()
+        model.add(Dense(x_train.shape[1], input_dim=x_train.shape[-1], kernel_initializer='normal', activation='relu'))
+        model.add(Dense(70, activation='relu'))
+        model.add(Dense(1, activation='linear'))
+        
+        model.compile(loss='mse', optimizer='adam', metrics=['mse', 'mae'])
+        
+        history = model.fit(x_train, y_train, epochs=epochs, batch_size=150, verbose=0, validation_split=0.2)
     
     return model, history
 
@@ -131,4 +134,3 @@ def main():
 # Run the app
 if __name__ == "__main__":
     main()
-
