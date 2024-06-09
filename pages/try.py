@@ -9,7 +9,7 @@ st.title("Prediction of COVID-19 Disease using SIRF Model")
 
 def train_model(df, target):
     # Feature engineering and preprocessing
-    X = df[['susceptible','infected', 'recovered', 'fatal','date']]
+    X = df[['susceptible','infected', 'recovered', 'fatal','confirmed']]
     y = df[target]
     # Standardize features
     scaler = StandardScaler()
@@ -21,7 +21,7 @@ def train_model(df, target):
 
 def predict_value(model, scaler, infected, recovered, fatal):
     # Scale the input data
-    new_data = np.array([[infected, recovered, fatal]])
+    new_data = np.array([[susceptible, infected, recovered, fatal, confirmed]])
     new_data_scaled = scaler.transform(new_data)
     # Perform prediction
     predicted_value = model.predict(new_data_scaled)
@@ -29,9 +29,11 @@ def predict_value(model, scaler, infected, recovered, fatal):
 
 def main():
     # Input form for new data
+    susceptible = st.number_input('Susceptible', value=10000000)
     infected = st.number_input('Infected', value=1000)
-    recovered = st.number_input('Recovered', value=500)
+    recovered = st.number_input('Recovered', value=1000)
     fatal = st.number_input('Fatal', value=50)
+    confirmed = st.number_input('Confirmed', value=100000)
     prediction_date = st.date_input('Prediction Date')
 
     # Read the CSV file
