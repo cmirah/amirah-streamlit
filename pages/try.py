@@ -53,6 +53,7 @@ def main():
 
     # Convert 'date' column to datetime, handling errors
     df['date'] = pd.to_datetime(df['date'], errors='coerce')
+    df = df.sort_values(by='date')
 
     # Initial input values for [S, I, R, F]
     initial_values = [10000000, 1000, 1000, 0]
@@ -89,8 +90,11 @@ def main():
             # Plotting the predicted vs actual values as a line graph with date on x-axis
             st.subheader(f"Predicted vs Actual")
             fig, ax = plt.subplots()
-            ax.plot(df['date'][y_test.index], y_test.values, label='Actual', alpha=0.6)
-            ax.plot(df['date'][y_test.index], y_pred_test, label='Predicted', alpha=0.6)
+            sorted_dates = df['date'][y_test.index]
+            sorted_actual = y_test.sort_index()
+            sorted_predicted = pd.Series(y_pred_test, index=y_test.index).sort_index()
+            ax.plot(sorted_dates, sorted_actual, label='Actual', alpha=0.6)
+            ax.plot(sorted_dates, sorted_predicted, label='Predicted', alpha=0.6)
             ax.set_xlabel('Date')
             ax.set_ylabel(f'{section} Values')
             ax.set_title(f"{section} Predicted vs Actual")
@@ -118,5 +122,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
