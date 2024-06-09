@@ -19,7 +19,7 @@ def train_model(df, target):
     model.fit(X_scaled, y)
     return model, scaler
 
-def predict_value(model, scaler, infected, recovered, fatal):
+def predict_value(model, scaler, susceptible, infected, recovered, fatal, confirmed):
     # Scale the input data
     new_data = np.array([[susceptible, infected, recovered, fatal, confirmed]])
     new_data_scaled = scaler.transform(new_data)
@@ -54,7 +54,7 @@ def main():
     if st.button('Predict'):
         predictions = {}
         for target in targets:
-            predictions[target] = predict_value(models[target], scalers[target], infected, recovered, fatal)
+            predictions[target] = predict_value(models[target], scalers[target], susceptible, infected, recovered, fatal)
 
         # Display predictions
         st.success(f'Predicted Susceptible value on {prediction_date} is : {predictions["susceptible"]:.0f}')
