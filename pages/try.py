@@ -9,7 +9,7 @@ st.title("Prediction of COVID-19 Disease using SIRF Model")
 
 def train_model(df, target):
     # Feature engineering and preprocessing
-    X = df[['susceptible','infected', 'recovered', 'fatal','confirmed']]
+    X = df[['susceptible', 'infected', 'recovered', 'fatal', 'confirmed']]
     y = df[target]
     # Standardize features
     scaler = StandardScaler()
@@ -54,7 +54,7 @@ def main():
     if st.button('Predict'):
         predictions = {}
         for target in targets:
-            predictions[target] = predict_value(models[target], scalers[target], susceptible, infected, recovered, fatal)
+            predictions[target] = predict_value(models[target], scalers[target], susceptible, infected, recovered, fatal, confirmed)
 
         # Display predictions
         st.success(f'Predicted Susceptible value on {prediction_date} is : {predictions["susceptible"]:.0f}')
@@ -64,6 +64,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
 
