@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 
 st.set_page_config(page_title="S_Prediction", page_icon="📕")
@@ -86,8 +87,8 @@ def main():
     st.subheader("Predicted vs Actual")
     df['date'] = pd.to_datetime(df['date'])
     fig, ax = plt.subplots()
-    ax.plot(df['date'], y_test, label='Actual', alpha=0.6)
-    ax.plot(df['date'], y_pred_test, label='Predicted', alpha=0.6)
+    ax.plot(df['date'][:len(y_test)], y_test, label='Actual', alpha=0.6)
+    ax.plot(df['date'][:len(y_test)], y_pred_test, label='Predicted', alpha=0.6)
     ax.set_xlabel('Date')
     ax.set_ylabel('Susceptible Values')
     ax.set_title("Susceptible Predicted vs Actual")
