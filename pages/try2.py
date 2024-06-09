@@ -35,7 +35,7 @@ def preprocess_data(df):
     return x_train_scale, y_train_scale, x_valid_scale, y_valid_scale, scaler_y, y_valid
 
 # Build and train the model
-def build_and_train_model(x_train, y_train, epochs=1000):
+def build_and_train_model(x_train, y_train, epochs=100):
     model = Sequential()
     model.add(Dense(x_train.shape[1], input_dim=x_train.shape[-1], kernel_initializer='normal', activation='relu'))
     model.add(Dense(70, activation='relu'))
