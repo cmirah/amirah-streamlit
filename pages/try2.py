@@ -117,6 +117,8 @@ def main():
             
             # Plot actual vs predicted
             df_result = pd.DataFrame({'Actual': st.session_state['y_valid_raw'].flatten(), 'Predicted': y_pred.flatten()})
+            st.write(df_result)
+            
             fig, ax = plt.subplots(figsize=(20, 10))
             df_result.plot(kind='line', ax=ax)
             ax.set_title('Actual vs Predicted')
@@ -129,3 +131,4 @@ def main():
 # Run the app
 if __name__ == "__main__":
     main()
+
