@@ -8,13 +8,13 @@ from keras.layers import Dense
 import matplotlib.pyplot as plt
 import tensorflow as tf
 
-# Load the data
+# Load data function
 @st.cache
 def load_data(file_path):
     df = pd.read_csv(file_path)
     return df
 
-# Preprocess the data
+# Preprocess data function
 def preprocess_data(df):
     train_data = df.loc[0:250]
     valid_data = df.loc[251:len(df)]
@@ -35,7 +35,7 @@ def preprocess_data(df):
     
     return x_train_scale, y_train_scale, x_valid_scale, y_valid_scale, scaler_y, y_valid.values
 
-# Build and train the model
+# Build and train model function
 def build_and_train_model(x_train, y_train, epochs=100):
     with tf.name_scope('Model'):
         model = Sequential()
@@ -49,18 +49,12 @@ def build_and_train_model(x_train, y_train, epochs=100):
     
     return model, history
 
-# Evaluate the model
+# Evaluate model function
 def evaluate_model(model, x_valid, y_valid, scaler_y):
-    # Reshape x_valid to match the expected input shape
     x_valid = np.reshape(x_valid, (x_valid.shape[0], -1))
-    
-    # Predict using the model
     y_pred_scale = model.predict(x_valid)
-    
-    # Inverse transform the scaled predictions
     y_pred = scaler_y.inverse_transform(y_pred_scale)
     
-    # Calculate evaluation metrics
     MAE = mean_absolute_error(y_valid, y_pred)
     MSE = mean_squared_error(y_valid, y_pred)
     RMSE = np.sqrt(MSE)
@@ -68,9 +62,7 @@ def evaluate_model(model, x_valid, y_valid, scaler_y):
     
     return y_pred, MAE, MSE, RMSE, MAPE
 
-
-
-# Main function to run the Streamlit app
+# Main function
 def main():
     st.title("SIR-F Model Prediction")
 
