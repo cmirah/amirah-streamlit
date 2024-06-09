@@ -32,7 +32,7 @@ def preprocess_data(df):
     y_train_scale = scaler_y.fit_transform(np.reshape(y_train.values, (-1, 1)))
     y_valid_scale = scaler_y.transform(np.reshape(y_valid.values, (-1, 1)))
     
-    return x_train_scale, y_train_scale, x_valid_scale, y_valid_scale, scaler_y, y_valid
+    return x_train_scale, y_train_scale, x_valid_scale, y_valid_scale, scaler_y, y_valid.values
 
 # Build and train the model
 def build_and_train_model(x_train, y_train, epochs=100):
@@ -54,7 +54,7 @@ def evaluate_model(model, x_valid, y_valid, scaler_y):
     MAE = mean_absolute_error(y_valid, y_pred)
     MSE = mean_squared_error(y_valid, y_pred)
     RMSE = np.sqrt(MSE)
-    MAPE = np.mean(np.abs((np.array(y_valid) - np.array(y_pred)) / np.array(y_valid))) * 100
+    MAPE = np.mean(np.abs((y_valid - y_pred) / y_valid)) * 100
     
     return y_pred, MAE, MSE, RMSE, MAPE
 
@@ -81,7 +81,7 @@ def main():
     
     if st.button("Train Model"):
         if 'x_train' in st.session_state and 'y_train' in st.session_state:
-            epochs = st.number_input("Enter the number of epochs", min_value=100, max_value=5000, value=1000)
+            epochs = st.number_input("Enter the number of epochs", min_value=10, max_value=500, value=100)
             model, history = build_and_train_model(st.session_state['x_train'], st.session_state['y_train'], epochs)
             
             st.session_state['model'] = model
@@ -102,11 +102,11 @@ def main():
             st.error("Please preprocess the data before training the model.")
         
     if st.button("Evaluate Model"):
-        if 'model' in st.session_state and 'x_valid' in st.session_state and 'y_valid' in st.session_state:
+        if 'model' in st.session_state and 'x_valid' in st.session_state and 'y_valid' in st.session_state and 'scaler_y' in st.session_state:
             y_pred, MAE, MSE, RMSE, MAPE = evaluate_model(
                 st.session_state['model'], 
                 st.session_state['x_valid'], 
-                st.session_state['y_valid_raw'], 
+                st.session_state['y_valid'], 
                 st.session_state['scaler_y']
             )
             
@@ -129,4 +129,3 @@ def main():
 # Run the app
 if __name__ == "__main__":
     main()
-
