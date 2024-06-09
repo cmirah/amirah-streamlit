@@ -61,7 +61,7 @@ def main():
     print(df['date'].unique())
 
     # Convert date column to datetime with the correct format
-    df['date'] = pd.to_datetime(df['date'], errors='coerce')  # Adjust format as needed
+    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', errors='coerce')
 
     # Train model and get evaluation metrics
     model, scaler, evaluation, y_train, y_test, y_pred_train, y_pred_test = train_model(df)
