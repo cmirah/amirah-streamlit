@@ -57,8 +57,11 @@ def main():
     file_path = 'cases_malaysia.csv'
     df = pd.read_csv(file_path)
 
-    # Convert date column to datetime
-    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d')
+    # Print out unique values in the 'date' column to determine its format
+    print(df['date'].unique())
+
+    # Convert date column to datetime with the correct format
+    df['date'] = pd.to_datetime(df['date'], errors='coerce')  # Adjust format as needed
 
     # Train model and get evaluation metrics
     model, scaler, evaluation, y_train, y_test, y_pred_train, y_pred_test = train_model(df)
@@ -100,6 +103,7 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
 
