@@ -33,16 +33,14 @@ def main():
 
     # Read the CSV file
     file_path = 'cases_malaysia.csv'
-    df = pd.read_csv(file_path, delimiter=',', encoding='utf-8')
-
+    df = pd.read_csv(file_path)
+    
     # Convert date column to datetime and remove the time component
     df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y', errors='coerce').dt.date
 
-    # Display the DataFrame for debugging
-    st.write("DataFrame head:")
-    st.write(df.head())
-    st.write("DataFrame date types:")
-    st.write(df['date'].dtype)
+    # Display the full DataFrame
+    st.write("Full Dataset:")
+    st.write(df)
 
     # Sort data by date
     df = df.sort_values('date')
@@ -95,4 +93,5 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
