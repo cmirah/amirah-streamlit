@@ -35,8 +35,8 @@ def main():
     file_path = 'cases_malaysia.csv'
     df = pd.read_csv(file_path)
     
-    # Convert date column to datetime
-    df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y', errors='coerce')
+    # Convert date column to datetime and remove the time component
+    df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y', errors='coerce').dt.date
 
     # Display the DataFrame for debugging
     st.write("DataFrame head:")
@@ -64,7 +64,7 @@ def main():
         models[target], scalers[target] = train_model(df, features_map[target], target)
 
     # Ensure prediction_date is a datetime object
-    prediction_date = pd.to_datetime(prediction_date)
+    prediction_date = pd.to_datetime(prediction_date).date()
 
     # Get the latest data before the prediction date
     latest_data = df[df['date'] < prediction_date]
@@ -89,8 +89,7 @@ def main():
             inputs = inputs_map[target]
             predictions[target] = predict_value(models[target], scalers[target], inputs)
         
-        formatted_date = prediction_date.strftime('%m/%d/%Y')
-        st.success(f"Predicted values on {formatted_date} are:")
+        st.success(f"Predicted values on {prediction_date} are:")
         st.write(f"Susceptible: {predictions['susceptible']:.0f}")
         st.write(f"Infected: {predictions['infected']:.0f}")
         st.write(f"Recovered: {predictions['recovered']:.0f}")
