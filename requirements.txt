@@ -10,3 +10,4 @@ plotly
 pillow
 tensorflow
 keras
+tensorflow==2.7.0
