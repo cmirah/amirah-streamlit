@@ -59,7 +59,13 @@ def main():
     prediction_date = pd.to_datetime(prediction_date)
 
     # Get the latest data before the prediction date
-    latest_data = df[df['date'] < prediction_date].iloc[-1]
+    latest_data = df[df['date'] < prediction_date]
+    
+    if latest_data.empty:
+        st.warning("No data available before the selected prediction date. Please choose a different date.")
+        return
+
+    latest_data = latest_data.iloc[-1]
     
     # Predict values
     inputs_map = {
