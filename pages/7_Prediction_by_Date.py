@@ -89,7 +89,8 @@ def main():
             inputs = inputs_map[target]
             predictions[target] = predict_value(models[target], scalers[target], inputs)
         
-        st.success(f"Predicted values on {prediction_date.date()} are:")
+        formatted_date = prediction_date.strftime('%m/%d/%Y')
+        st.success(f"Predicted values on {formatted_date} are:")
         st.write(f"Susceptible: {predictions['susceptible']:.0f}")
         st.write(f"Infected: {predictions['infected']:.0f}")
         st.write(f"Recovered: {predictions['recovered']:.0f}")
