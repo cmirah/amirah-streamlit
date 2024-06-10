@@ -7,6 +7,5 @@ matplotlib
 seaborn
 scikit-learn
 plotly
-pillow
 keras
 tensorflow
