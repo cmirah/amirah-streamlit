@@ -36,7 +36,15 @@ def main():
     df = pd.read_csv(file_path)
     
     # Convert date column to datetime
-    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', errors='coerce')
+    df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y', errors='coerce')
+
+    # Display the DataFrame for debugging
+    st.write("DataFrame head:")
+    st.write(df.head())
+    st.write("DataFrame tail:")
+    st.write(df.tail())
+    st.write("DataFrame date types:")
+    st.write(df['date'].dtype)
 
     # Sort data by date
     df = df.sort_values('date')
@@ -89,3 +97,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
