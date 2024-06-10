@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestRegressor
+import plotly.graph_objects as go
 
 st.set_page_config(page_title="SIRF Prediction", page_icon="📊")
 st.title("Prediction of COVID-19 Disease using SIRF Model")
@@ -98,6 +99,56 @@ def main():
         st.write(f"Infected: {predictions['infected']:.0f}")
         st.write(f"Recovered: {predictions['recovered']:.0f}")
         st.write(f"Fatal: {predictions['fatal']:.0f}")
+
+        # Plotting the SIRF curves over time
+        plot_data = {
+            'Date': [],
+            'Susceptible': [],
+            'Infected': [],
+            'Recovered': [],
+            'Fatal': []
+        }
+
+        # Populate plot_data for each date up to prediction_date
+        current_date = latest_data['date']
+        while current_date <= prediction_date:
+            plot_data['Date'].append(current_date)
+            plot_data['Susceptible'].append(inputs_map['susceptible'][0])
+            plot_data['Infected'].append(inputs_map['infected'][0])
+            plot_data['Recovered'].append(inputs_map['recovered'][0])
+            plot_data['Fatal'].append(inputs_map['fatal'][0])
+
+            # Update inputs_map for the next day's prediction
+            inputs_map['susceptible'] = [predictions['susceptible'], predictions['recovered'], predictions['fatal'], predictions['confirmed']]
+            inputs_map['infected'] = [predictions['infected'], predictions['recovered'], predictions['fatal'], predictions['confirmed']]
+            inputs_map['recovered'] = [predictions['susceptible'], predictions['infected'], predictions['fatal'], predictions['confirmed']]
+            inputs_map['fatal'] = [predictions['susceptible'], predictions['infected'], predictions['recovered'], predictions['confirmed']]
+
+            # Predict for the next day
+            for target in targets:
+                predictions[target] = predict_value(models[target], scalers[target], inputs_map[target])
+
+            current_date += pd.Timedelta(days=1)
+
+        # Create Plotly figure
+        fig = go.Figure()
+
+        # Add traces for each category
+        fig.add_trace(go.Scatter(x=plot_data['Date'], y=plot_data['Susceptible'], mode='lines', name='Susceptible'))
+        fig.add_trace(go.Scatter(x=plot_data['Date'], y=plot_data['Infected'], mode='lines', name='Infected'))
+        fig.add_trace(go.Scatter(x=plot_data['Date'], y=plot_data['Recovered'], mode='lines', name='Recovered'))
+        fig.add_trace(go.Scatter(x=plot_data['Date'], y=plot_data['Fatal'], mode='lines', name='Fatal'))
+
+        # Update figure layout
+        fig.update_layout(
+            title='SIRF Model Prediction',
+            xaxis_title='Date',
+            yaxis_title='Population',
+            template='plotly_white'
+        )
+
+        # Display the plot
+        st.plotly_chart(fig)
 
 if __name__ == '__main__':
     main()
