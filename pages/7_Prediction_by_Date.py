@@ -35,12 +35,20 @@ def main():
     file_path = 'cases_malaysia.csv'
     df = pd.read_csv(file_path)
     
+    # Check for None values in the DataFrame
+    if df.isnull().values.any():
+        st.warning("The DataFrame contains None or NaN values. Please check your CSV file and make sure it is properly formatted.")
+        st.write(df[df.isnull().any(axis=1)])
+
     # Convert date column to datetime and remove the time component
     df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y', errors='coerce').dt.date
 
     # Display the full DataFrame
     st.write("Full Dataset:")
     st.write(df)
+
+    # Drop rows with None values
+    df = df.dropna()
 
     # Sort data by date
     df = df.sort_values('date')
@@ -93,5 +101,6 @@ def main():
 
 if __name__ == '__main__':
     main()
+
 
 
