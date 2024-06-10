@@ -29,10 +29,6 @@ def predict_value(model, scaler, inputs):
 
 def main():
     # Input form for new data
-    susceptible = st.number_input('Susceptible', value=10000000)
-    infected = st.number_input('Infected', value=1000)
-    recovered = st.number_input('Recovered', value=1000)
-    fatal = st.number_input('Fatal', value=50)
     prediction_date = st.date_input('Prediction Date')
 
     # Read the CSV file
@@ -40,7 +36,18 @@ def main():
     df = pd.read_csv(file_path)
     
     # Convert date column to datetime
-    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', errors='coerce')
+    df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y', errors='coerce')
+
+    # Display the DataFrame for debugging
+    st.write("DataFrame head:")
+    st.write(df.head())
+    st.write("DataFrame tail:")
+    st.write(df.tail())
+    st.write("DataFrame date types:")
+    st.write(df['date'].dtype)
+
+    # Sort data by date
+    df = df.sort_values('date')
 
     # Train models
     models = {}
@@ -56,29 +63,37 @@ def main():
     for target in targets:
         models[target], scalers[target] = train_model(df, features_map[target], target)
 
-    # Predict button for S
-    if st.button('Predict S'):
-        inputs = [infected, recovered, fatal, 0]  # 0 for confirmed (not used for S prediction)
-        prediction = predict_value(models['susceptible'], scalers['susceptible'], inputs)
-        st.success(f'Predicted Susceptible value on {prediction_date} is : {prediction:.0f}')
+    # Ensure prediction_date is a datetime object
+    prediction_date = pd.to_datetime(prediction_date)
 
-    # Predict button for I
-    if st.button('Predict I'):
-        inputs = [susceptible, recovered, fatal, 0]  # 0 for confirmed (not used for I prediction)
-        prediction = predict_value(models['infected'], scalers['infected'], inputs)
-        st.success(f'Predicted Infected value on {prediction_date} is : {prediction:.0f}')
+    # Get the latest data before the prediction date
+    latest_data = df[df['date'] < prediction_date]
+    
+    if latest_data.empty:
+        st.warning("No data available before the selected prediction date. Please choose a different date.")
+        return
 
-    # Predict button for R
-    if st.button('Predict R'):
-        inputs = [susceptible, infected, fatal, 0]  # 0 for confirmed (not used for R prediction)
-        prediction = predict_value(models['recovered'], scalers['recovered'], inputs)
-        st.success(f'Predicted Recovered value on {prediction_date} is : {prediction:.0f}')
+    latest_data = latest_data.iloc[-1]
+    
+    # Predict values
+    inputs_map = {
+        'susceptible': [latest_data['infected'], latest_data['recovered'], latest_data['fatal'], latest_data['confirmed']],
+        'infected': [latest_data['susceptible'], latest_data['recovered'], latest_data['fatal'], latest_data['confirmed']],
+        'recovered': [latest_data['susceptible'], latest_data['infected'], latest_data['fatal'], latest_data['confirmed']],
+        'fatal': [latest_data['susceptible'], latest_data['infected'], latest_data['recovered'], latest_data['confirmed']]
+    }
 
-    # Predict button for F
-    if st.button('Predict F'):
-        inputs = [susceptible, infected, recovered, 0]  # 0 for confirmed (not used for F prediction)
-        prediction = predict_value(models['fatal'], scalers['fatal'], inputs)
-        st.success(f'Predicted Fatal value on {prediction_date} is : {prediction:.0f}')
+    if st.button('Predict SIRF'):
+        predictions = {}
+        for target in targets:
+            inputs = inputs_map[target]
+            predictions[target] = predict_value(models[target], scalers[target], inputs)
+        
+        st.success(f"Predicted values on {prediction_date.date()} are:")
+        st.write(f"Susceptible: {predictions['susceptible']:.0f}")
+        st.write(f"Infected: {predictions['infected']:.0f}")
+        st.write(f"Recovered: {predictions['recovered']:.0f}")
+        st.write(f"Fatal: {predictions['fatal']:.0f}")
 
 if __name__ == '__main__':
     main()
