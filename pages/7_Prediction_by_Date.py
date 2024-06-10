@@ -41,8 +41,6 @@ def main():
     # Display the DataFrame for debugging
     st.write("DataFrame head:")
     st.write(df.head())
-    st.write("DataFrame tail:")
-    st.write(df.tail())
     st.write("DataFrame date types:")
     st.write(df['date'].dtype)
 
@@ -97,3 +95,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
