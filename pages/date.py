@@ -55,6 +55,9 @@ def main():
     for target in targets:
         models[target], scalers[target] = train_model(df, features_map[target], target)
 
+    # Ensure prediction_date is a datetime object
+    prediction_date = pd.to_datetime(prediction_date)
+
     # Get the latest data before the prediction date
     latest_data = df[df['date'] < prediction_date].iloc[-1]
     
@@ -72,7 +75,7 @@ def main():
             inputs = inputs_map[target]
             predictions[target] = predict_value(models[target], scalers[target], inputs)
         
-        st.success(f"Predicted values on {prediction_date} are:")
+        st.success(f"Predicted values on {prediction_date.date()} are:")
         st.write(f"Susceptible: {predictions['susceptible']:.0f}")
         st.write(f"Infected: {predictions['infected']:.0f}")
         st.write(f"Recovered: {predictions['recovered']:.0f}")
