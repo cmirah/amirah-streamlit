@@ -33,8 +33,8 @@ def main():
 
     # Read the CSV file
     file_path = 'cases_malaysia.csv'
-    df = pd.read_csv(file_path)
-    
+    df = pd.read_csv(file_path, delimiter=',', encoding='utf-8')
+
     # Convert date column to datetime and remove the time component
     df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y', errors='coerce').dt.date
 
