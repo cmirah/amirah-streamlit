@@ -10,3 +10,5 @@ plotly
 keras
 tensorflow
 pillow
+torch
+neurodiffeq
