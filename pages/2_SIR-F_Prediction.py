@@ -156,7 +156,7 @@ def plot_results(ts, s_net, i_net, r_net, f_net, s_num, t):
     st.pyplot(fig)
 
 def main():
-    st.title('SIR-F Model Prediction using Neural Networks')
+    st.title('SIR-F System Prediction using Neural Networks')
 
     st.sidebar.header('Configuration')
     epochs = st.sidebar.slider('Number of Epochs', min_value=100, max_value=5000, value=1000, step=100)
@@ -166,19 +166,17 @@ def main():
     st.sidebar.text(f'- Number of Epochs: {epochs}')
     st.sidebar.text(f'- Number of Neurons: {neurons}')
 
-    st.sidebar.header('Training Progress')
-
     if st.sidebar.button('Train Model'):
-        st.sidebar.text('Training in progress...')
+        st.text('Training in progress...')
 
         # Neural network approximation.
         t1_start = process_time()
         ts, s_net, i_net, r_net, f_net = neural_network(epochs, neurons)
         t1_stop = process_time()
 
-        st.sidebar.text(f'Training completed in {t1_stop - t1_start:.2f} seconds.')
+        st.text(f'Training completed in {t1_stop - t1_start:.2f} seconds.')
 
-        st.sidebar.text('Generating plots...')
+        st.text('Generating plots...')
         tspan = np.array([0.0, 25])
         y0 = np.array([10, 1, 0, 0])
         n = 100
@@ -189,8 +187,12 @@ def main():
 
         plot_results(ts, s_net, i_net, r_net, f_net, s_num, t)
 
-        st.sidebar.text(f'Elapsed time for numerical approximation: {t2_stop - t2_start:.2f} seconds.')
+        st.text(f'Elapsed time for numerical approximation: {t2_stop - t2_start:.2f} seconds.')
 
-if __name__ == '__main__':
-    main()
+        st.subheader('Prediction Results:')
+        st.write('Neural Network Approximation:')
+        st.write(f'- Susceptible: {s_net[-1]:.2f}')
+        st.write(f'- Infected: {i_net[-1]:.2f}')
+        st.write(f'-
+
 
