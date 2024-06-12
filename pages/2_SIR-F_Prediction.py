@@ -81,11 +81,12 @@ def sirf_deriv(t, values):
     derivs = np.array([dsdt, didt, drdt, dfdt])
     return derivs
 
-def neural_network(epochs, neurons):
+def neural_network(epochs, neurons, show_progress=False):
     """
     Solves the SIRF system of equations using a fully connected neural network with sigmoid activation.
     :param epochs: Number of epochs for training
     :param neurons: Number of neurons in each hidden layer
+    :param show_progress: Whether to show training progress
     :return: The solutions to the system
     """
     beta, gamma, alpha1, alpha2, N = 0.615, 0.193, 0.06, 0.03, 340000000
@@ -124,7 +125,14 @@ def neural_network(epochs, neurons):
         nets=nets_sirf
     )
 
+    if show_progress:
+        st.text('Training in progress...')
+    
     solver.fit(max_epochs=epochs, callbacks=[monitor_callback])
+
+    if show_progress:
+        st.text('Training completed.')
+
     solution_sirf = solver.get_solution()
     ts = np.linspace(0, 25, 100)
     s_net, i_net, r_net, f_net = solution_sirf(ts, to_numpy=True)
@@ -167,32 +175,22 @@ def main():
     st.sidebar.text(f'- Number of Neurons: {neurons}')
 
     if st.sidebar.button('Train Model'):
-        st.text('Training in progress...')
-
-        # Neural network approximation.
-        t1_start = process_time()
-        ts, s_net, i_net, r_net, f_net = neural_network(epochs, neurons)
-        t1_stop = process_time()
-
-        st.text(f'Training completed in {t1_stop - t1_start:.2f} seconds.')
+        ts, s_net, i_net, r_net, f_net = neural_network(epochs, neurons, show_progress=True)
+        
+        st.text('Training completed.')
 
         st.text('Generating plots...')
         tspan = np.array([0.0, 25])
         y0 = np.array([10, 1, 0, 0])
         n = 100
 
-        t2_start = process_time()
         s_num, t = implicit_euler(sirf_deriv, y0, tspan, n)
-        t2_stop = process_time()
 
         plot_results(ts, s_net, i_net, r_net, f_net, s_num, t)
 
-        st.text(f'Elapsed time for numerical approximation: {t2_stop - t2_start:.2f} seconds.')
+        st.text('Elapsed time for numerical approximation: {:.2f} seconds.'.format(process_time()))
 
-        st.subheader('Prediction Results:')
-        st.write('Neural Network Approximation:')
-        st.write(f'- Susceptible: {s_net[-1]:.2f}')
-        st.write(f'- Infected: {i_net[-1]:.2f}')
-        st.write(f'-
+if __name__ == '__main__':
+    main()
 
 
