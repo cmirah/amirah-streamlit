@@ -131,31 +131,29 @@ def neural_network(epochs, neurons):
     return ts, s_net, i_net, r_net, f_net
 
 def plot_results(ts, s_net, i_net, r_net, f_net, s_num, t):
-    plt.figure(figsize=(10, 6))
+    fig, axs = plt.subplots(2, 1, figsize=(10, 12))
 
-    plt.subplot(2, 1, 1)
-    plt.plot(ts, s_net, label='NN Susceptible')
-    plt.plot(ts, i_net, label='NN Infected')
-    plt.plot(ts, r_net, label='NN Recovered')
-    plt.plot(ts, f_net, label='NN Fatal')
-    plt.plot(t, s_num, '--', label='NUM Susceptible')
-    plt.plot(t, s_num, '--', label='NUM Infected')
-    plt.plot(t, s_num, '--', label='NUM Recovered')
-    plt.plot(t, s_num, '--', label='NUM Fatal')
-    plt.legend()
-    plt.title('Approximated solutions to the SIRF System')
-    plt.xlabel('Time')
-    plt.ylabel('Population')
+    axs[0].plot(ts, s_net, label='NN Susceptible')
+    axs[0].plot(ts, i_net, label='NN Infected')
+    axs[0].plot(ts, r_net, label='NN Recovered')
+    axs[0].plot(ts, f_net, label='NN Fatal')
+    axs[0].plot(t, s_num, '--', label='NUM Susceptible')
+    axs[0].plot(t, s_num, '--', label='NUM Infected')
+    axs[0].plot(t, s_num, '--', label='NUM Recovered')
+    axs[0].plot(t, s_num, '--', label='NUM Fatal')
+    axs[0].legend()
+    axs[0].set_title('Approximated solutions to the SIRF System')
+    axs[0].set_xlabel('Time')
+    axs[0].set_ylabel('Population')
 
-    plt.subplot(2, 1, 2)
-    plt.plot(t, s_num)
-    plt.legend(['Susceptible', 'Infected', 'Recovered', 'Fatal'])
-    plt.title('Numerical Approximation')
-    plt.xlabel('Time')
-    plt.ylabel('Population')
+    axs[1].plot(t, s_num)
+    axs[1].legend(['Susceptible', 'Infected', 'Recovered', 'Fatal'])
+    axs[1].set_title('Numerical Approximation')
+    axs[1].set_xlabel('Time')
+    axs[1].set_ylabel('Population')
 
     plt.tight_layout()
-    st.pyplot()
+    st.pyplot(fig)
 
 def main():
     st.title('SIR-F Model Prediction using Neural Networks')
@@ -195,3 +193,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
