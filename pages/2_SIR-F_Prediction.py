@@ -158,7 +158,7 @@ def plot_results(ts, s_net, i_net, r_net, f_net, s_num, t):
     st.pyplot()
 
 def main():
-    st.title('SIR-F System Prediction using Neural Networks')
+    st.title('SIR-F Model Prediction using Neural Networks')
 
     st.sidebar.header('Configuration')
     epochs = st.sidebar.slider('Number of Epochs', min_value=100, max_value=5000, value=1000, step=100)
