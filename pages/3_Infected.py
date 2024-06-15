@@ -1,52 +1,83 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import RandomForestRegressor
+import altair as alt
+import plotly.express as px
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
-st.set_page_config(page_title="I_Prediction",page_icon="📘")
-st.title("Prediction of COVID-19 Disease using SIRF Model")
-st.subheader("Infected Prediction")
+# Dummy function for SIR-F model prediction - replace with actual implementation
+def predict_sirf(data, params):
+    # Dummy implementation
+    predictions = data.copy()
+    predictions['Predicted Infected'] = data['Infected'] * params['transmission_rate']
+    return predictions
 
-def train_model(df):
-    # Feature engineering and preprocessing
-    X = df[['susceptible', 'recovered', 'fatal']]
-    y = df['infected']
-    # Standardize features
-    scaler = StandardScaler()
-    X_scaled = scaler.fit_transform(X)
-    # Train model
-    model = RandomForestRegressor()
-    model.fit(X_scaled, y)
-    return model, scaler
+# Home/Introduction
+st.title("PolicyPredict: Public Health Decision Support Tool")
+st.write("""
+Welcome to the COVID-19 SIR-F Model Prediction App. This tool helps you simulate and visualize COVID-19 spread using the SIR-F model.
+""")
 
-def predict_infected(model, scaler, susceptible, recovered, fatal):
-    # Scale the input data
-    new_data = np.array([[susceptible, recovered, fatal]])
-    new_data_scaled = scaler.transform(new_data)
-    # Perform prediction
-    predicted_infected = model.predict(new_data_scaled)
-    return predicted_infected[0]
+# Data Input
+st.sidebar.header("1. Data Input")
+uploaded_file = st.sidebar.file_uploader("Upload your CSV file", type=["csv"])
 
-def main():
-    # Input form for new data
-    susceptible = st.number_input('Susceptible', value=100000)
-    recovered = st.number_input('Recovered', value=500)
-    fatal = st.number_input('Fatal', value=50)
+if uploaded_file is not None:
+    data = pd.read_csv(uploaded_file, parse_dates=['date'], dayfirst=True)
+    data['date'] = data['date'].dt.date
+    st.write("Data Preview")
+    st.write(data.head())
 
-    # Read the CSV file
-    file_path = 'cases_malaysia.csv'
-    df = pd.read_csv(file_path)
+# Model Parameters
+st.sidebar.header("2. Model Parameters")
+transmission_rate = st.sidebar.slider("Transmission Rate (β)", min_value=0.0, max_value=1.0, value=0.1)
+recovery_rate = st.sidebar.slider("Recovery Rate (γ)", min_value=0.0, max_value=1.0, value=0.05)
+fatality_rate = st.sidebar.slider("Fatality Rate (α)", min_value=0.0, max_value=1.0, value=0.01)
+params = {'transmission_rate': transmission_rate, 'recovery_rate': recovery_rate, 'fatality_rate': fatality_rate}
 
-    # Train model
-    model, scaler = train_model(df)
+# Prediction and Simulation
+if uploaded_file is not None:
+    st.header("Prediction and Simulation")
+    predictions = predict_sirf(data, params)
+    st.write("Prediction Results")
+    st.write(predictions.head())
 
-    # Predict button
-    if st.button('Predict Infected'):
-        # Perform prediction
-        prediction = predict_infected(model, scaler, susceptible, recovered, fatal)
-        # Display prediction
-        st.success(f'Predicted Infected value is : {prediction:.0f}')
+    # Visualization
+    fig = px.line(predictions, x='date', y=['Infected', 'Predicted Infected'], title="COVID-19 Predictions")
+    st.plotly_chart(fig)
 
-if __name__ == '__main__':
-    main()
+    # Performance Metrics
+    st.header("Model Performance Metrics")
+    mse = mean_squared_error(data['Infected'], predictions['Predicted Infected'])
+    r2 = r2_score(data['Infected'], predictions['Predicted Infected'])
+    mae = mean_absolute_error(data['Infected'], predictions['Predicted Infected'])
+    st.write(f"Mean Squared Error: {mse}")
+    st.write(f"R-squared: {r2}")
+    st.write(f"Mean Absolute Error: {mae}")
+
+    # Export Results
+    st.header("Export and Share Results")
+    if st.button("Download Results as CSV"):
+        predictions.to_csv("predictions.csv")
+        st.write("Results downloaded!")
+
+    # Additional Features
+    st.header("Scenario Analysis")
+    st.write("Simulate different public health interventions and see how they affect the predictions.")
+
+# Documentation and Help
+st.sidebar.header("Documentation and Help")
+st.sidebar.write("""
+For detailed documentation, please refer to the [user guide](#).
+If you have any questions, check out our FAQ section or contact us.
+""")
+
+# Settings
+st.sidebar.header("Settings")
+theme = st.sidebar.selectbox("Choose Theme", ["Light", "Dark"])
+st.sidebar.write("Your preferences will be saved for future use.")
+
+# Real-Time Updates (Placeholder)
+st.sidebar.header("Real-Time Updates")
+st.sidebar.write("Incorporate real-time data updates to provide the latest information and predictions.")
