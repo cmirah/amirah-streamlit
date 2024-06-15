@@ -4,7 +4,7 @@ import plotly.express as px
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 
 # Load developer's data
-data = pd.read_csv('covid_data.csv', parse_dates=['date'], dayfirst=True)
+data = pd.read_csv('cases_malaysia.csv', parse_dates=['date'], dayfirst=True)
 data['date'] = data['date'].dt.date
 
 # Dummy function for SIR-F model prediction - replace with actual implementation
