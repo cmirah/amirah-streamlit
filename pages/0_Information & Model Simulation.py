@@ -115,16 +115,20 @@ if page == 'Model Simulation':
         # Simulation Parameters Section
         st.sidebar.header("Simulation Parameters")
         st.sidebar.markdown("(Values can be adjusted)")
-        T = st.sidebar.number_input("Total Number of Days", min_value=1, value=100)
-        S0 = st.sidebar.number_input("Initial Susceptible Population", value=34000000)
-        I0 = st.sidebar.number_input("Initial Infected Population", value=300000)
-        R0 = st.sidebar.number_input("Initial Recovered Population", value=0)
-        F0 = st.sidebar.number_input("Initial Fatal Population", value=0)
-        beta = st.sidebar.number_input("Transmission Rate (β)", value=0.615)
-        gamma = st.sidebar.number_input("Recovery Rate (γ)", value=0.193)
-        alpha1 = st.sidebar.number_input("Fatal Recovery Rate (α1)", value=0.06)
-        alpha2 = st.sidebar.number_input("Fatal Transmission Rate (α2)", value=0.03)
-        stepCount = st.sidebar.number_input("Number of Steps", value=1000)
+        # Simulation Parameters Section
+        st.sidebar.header("Simulation Parameters")
+        st.sidebar.markdown("(Values can be adjusted)")
+        T = st.sidebar.slider("Total Number of Days", min_value=1, max_value=365, value=100)
+        S0 = st.sidebar.slider("Initial Susceptible Population", min_value=0, max_value=50000000, value=34000000, step=1000000)
+        I0 = st.sidebar.slider("Initial Infected Population", min_value=0, max_value=1000000, value=300000, step=10000)
+        R0 = st.sidebar.slider("Initial Recovered Population", min_value=0, max_value=1000000, value=0, step=10000)
+        F0 = st.sidebar.slider("Initial Fatal Population", min_value=0, max_value=1000000, value=0, step=10000)
+        beta = st.sidebar.slider("Transmission Rate (β)", min_value=0.0, max_value=1.0, value=0.615)
+        gamma = st.sidebar.slider("Recovery Rate (γ)", min_value=0.0, max_value=1.0, value=0.193)
+        alpha1 = st.sidebar.slider("Fatal Recovery Rate (α1)", min_value=0.0, max_value=1.0, value=0.06)
+        alpha2 = st.sidebar.slider("Fatal Transmission Rate (α2)", min_value=0.0, max_value=1.0, value=0.03)
+        stepCount = st.sidebar.slider("Number of Steps", min_value=100, max_value=10000, value=1000, step=100)
+
 
         X0 = np.array([S0, I0, R0, F0])
         modelParams = {"X0": X0, "beta": beta, "gamma": gamma, "alpha1": alpha1, "alpha2": alpha2, "T": T, "stepCount": stepCount}
