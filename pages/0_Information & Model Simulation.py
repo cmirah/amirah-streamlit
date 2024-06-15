@@ -115,9 +115,9 @@ if page == 'Model Simulation':
         # Simulation Parameters Section
         st.sidebar.header("Simulation Parameters")
         st.sidebar.markdown("(Values can be adjusted)")
-        T = st.sidebar.number_input("Total Number of Days", min_value=1, value=100)
-        S0 = st.sidebar.number_input("Initial Susceptible Population", value=34000000)
-        I0 = st.sidebar.number_input("Initial Infected Population", value=300000)
+        T = st.sidebar.slider.number_input("Total Number of Days", min_value=1, value=100)
+        S0 = st.sidebar.slider.number_input("Initial Susceptible Population", value=34000000)
+        I0 = st.sidebar.slider.number_input("Initial Infected Population", value=300000)
         R0 = st.sidebar.number_input("Initial Recovered Population", value=0)
         F0 = st.sidebar.number_input("Initial Fatal Population", value=0)
         beta = st.sidebar.number_input("Transmission Rate (β)", value=0.615)
