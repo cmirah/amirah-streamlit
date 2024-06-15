@@ -10,7 +10,7 @@ from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 def predict_sirf(data, params):
     # Dummy implementation
     predictions = data.copy()
-    predictions['Predicted Infected'] = data['Infected'] * params['transmission_rate']
+    predictions['Predicted Infected'] = data['infected'] * params['transmission_rate']
     return predictions
 
 # Home/Introduction
