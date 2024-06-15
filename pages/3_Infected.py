@@ -10,7 +10,7 @@ data['date'] = data['date'].dt.date
 # Dummy function for SIR-F model prediction - replace with actual implementation
 def predict_sirf(data, params):
     # Check if required columns are present
-    required_columns = ['date', 'Infected']
+    required_columns = ['date', 'infected']
     for col in required_columns:
         if col not in data.columns:
             st.error(f"Column '{col}' is missing from the data.")
@@ -18,7 +18,7 @@ def predict_sirf(data, params):
     
     # Dummy implementation - replace with actual SIR-F model
     predictions = data.copy()
-    predictions['Predicted Infected'] = data['Infected'] * params['transmission_rate']
+    predictions['Predicted Infected'] = data['infected'] * params['transmission_rate']
     return predictions
 
 # Home/Introduction
@@ -54,9 +54,9 @@ if predictions is not None:
         
         # Performance Metrics
         st.header("Model Performance Metrics")
-        mse = mean_squared_error(data['Infected'], predictions['Predicted Infected'])
-        r2 = r2_score(data['Infected'], predictions['Predicted Infected'])
-        mae = mean_absolute_error(data['Infected'], predictions['Predicted Infected'])
+        mse = mean_squared_error(data['infected'], predictions['Predicted Infected'])
+        r2 = r2_score(data['infected'], predictions['Predicted Infected'])
+        mae = mean_absolute_error(data['infected'], predictions['Predicted Infected'])
         st.write(f"Mean Squared Error: {mse}")
         st.write(f"R-squared: {r2}")
         st.write(f"Mean Absolute Error: {mae}")
