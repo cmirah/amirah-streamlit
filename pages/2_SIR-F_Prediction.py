@@ -10,6 +10,8 @@ from matplotlib import pyplot as plt
 from time import process_time
 from scipy.optimize import fsolve
 
+st.image("cvd.png", width = 500)
+
 def implicit_euler_residual(yp, ode, to, yo, tp):
     """
     Evaluates the residual of the implicit Euler.
