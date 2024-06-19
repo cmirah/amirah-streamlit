@@ -38,9 +38,9 @@ def run():
         
         **👈 Select a demo from the sidebar** to explore the features of this app!
         """
-    st.image("covid.gif", width=300)
     )
-
+    st.image("covid.gif", width=300)
+    
     st.header("More Information")
     st.markdown(
         """
