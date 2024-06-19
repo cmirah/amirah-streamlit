@@ -39,7 +39,10 @@ def run():
         **👈 Select a demo from the sidebar** to explore the features of this app!
         """
     )
-    st.image("covid.gif", width=300)
+    st.image(
+            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2F%40creatrohit9%2Fmachine-learning-introduction-5049601d2da2&psig=AOvVaw0oNMCd1uzhvpwid3_wAgdU&ust=1718885882997000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCJjUgIbT54YDFQAAAAAdAAAAABAQ",
+            width=400, 
+        )
     
     st.header("More Information")
     st.markdown(
