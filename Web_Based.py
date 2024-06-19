@@ -46,7 +46,6 @@ def run():
         """
         - This application was developed by **Amirah Alysha bt Azman** as part of her Final Year Project II.
         - Data sourced from the [MoH-Malaysia](https://github.com/MoH-Malaysia/covid19-public.git).
-        - Check out the [App Deployment](https://share.streamlit.io/).
         - Detailed Python coding for each S-I-R-F Prediction can be found here:
     """
     )
