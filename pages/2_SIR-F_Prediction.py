@@ -10,8 +10,6 @@ from matplotlib import pyplot as plt
 from time import process_time
 from scipy.optimize import fsolve
 
-st.image("cvd.png", width = 500)
-
 def implicit_euler_residual(yp, ode, to, yo, tp):
     """
     Evaluates the residual of the implicit Euler.
@@ -167,7 +165,8 @@ def plot_results(ts, s_net, i_net, r_net, f_net, s_num, t):
 
 def main():
     st.title('SIR-F System Prediction using Neural Networks')
-
+    st.image("cvd.png", width = 500)
+    st.markdown("Select the epochs from the sidebar to train the neuron!")
     st.sidebar.header('Configuration')
     epochs = st.sidebar.slider('Number of Epochs', min_value=100, max_value=5000, value=1000, step=100)
     neurons = st.sidebar.slider('Number of Neurons', min_value=16, max_value=128, value=32, step=16)
