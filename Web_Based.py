@@ -39,9 +39,8 @@ def run():
         **👈 Select a demo from the sidebar** to explore the features of this app!
         """
     )
-
+st.image("covid.gif", width=300)
     st.header("More Information")
-    st.image("covid.gif", width=300)
     st.markdown(
         """
         - This application was developed by **Amirah Alysha bt Azman** as part of her Final Year Project II.
