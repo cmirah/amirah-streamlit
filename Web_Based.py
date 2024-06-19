@@ -31,10 +31,6 @@ def run():
 
     # Sidebar and title
     st.sidebar.success("Select an option above.")
-    st.image(
-            "https://hms.harvard.edu/sites/default/files/2023-10/850-evolving-virus-gif-4-reversed.gif",
-            width=200, 
-        )
 
     st.markdown(
         """
