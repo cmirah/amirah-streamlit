@@ -40,7 +40,7 @@ def run():
         """
     )
     st.image(
-            "https://www.google.com/url?sa=i&url=https%3A%2F%2Fmedium.com%2F%40creatrohit9%2Fmachine-learning-introduction-5049601d2da2&psig=AOvVaw0oNMCd1uzhvpwid3_wAgdU&ust=1718885882997000&source=images&cd=vfe&opi=89978449&ved=0CBMQjRxqFwoTCJjUgIbT54YDFQAAAAAdAAAAABAQ",
+            "https://search.app.goo.gl/Vhacxmp",
             width=400, 
         )
     
