@@ -166,7 +166,7 @@ def plot_results(ts, s_net, i_net, r_net, f_net, s_num, t):
 def main():
     st.title('SIR-F System Prediction using Neural Networks')
     st.image("cvd.png", width = 500)
-    st.markdown("Select the epochs from the sidebar to train the neuron!")
+    st.markdown("***<<<<< Select the epochs from the sidebar to train the model!***")
     st.sidebar.header('Configuration')
     epochs = st.sidebar.slider('Number of Epochs', min_value=100, max_value=5000, value=1000, step=100)
     neurons = st.sidebar.slider('Number of Neurons', min_value=16, max_value=128, value=32, step=16)
