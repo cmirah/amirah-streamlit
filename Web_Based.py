@@ -41,6 +41,7 @@ def run():
     )
 
     st.header("More Information")
+    st.image("covid.gif", width=300)
     st.markdown(
         """
         - This application was developed by **Amirah Alysha bt Azman** as part of her Final Year Project II.
