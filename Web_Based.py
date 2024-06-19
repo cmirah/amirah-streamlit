@@ -40,7 +40,7 @@ def run():
         """
     )
     st.image(
-            "https://search.app.goo.gl/Vhacxmp.gif",
+            "https://miro.medium.com/v2/resize:fit:1000/1*u3du7-1WjwxlaFlF7Lv59g.gif",
             width=400, 
         )
     
