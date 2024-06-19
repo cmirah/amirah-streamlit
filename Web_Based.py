@@ -27,7 +27,7 @@ def run():
     st.title("👋 Epidemic Forecast Pro App 👩‍💻")
 
     # Display image
-    st.image("WEBCoronavirus.png", width=500)
+    st.image("https://www.politico.com/dims4/default/8defef3/2147483647/strip/true/crop/1024x683+0+0/resize/1290x860!/quality/90/?url=https%3A%2F%2Fstatic.politico.com%2F06%2F7e%2F29b7c1a54a8d9448a5693240bb6b%2Fglennharvey-2021-08-02-politico-lede-motion.gif", width=500)
 
     # Sidebar and title
     st.sidebar.success("Select an option above.")
