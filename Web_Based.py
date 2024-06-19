@@ -40,7 +40,7 @@ def run():
         """
     )
     st.image(
-            "https://miro.medium.com/v2/resize:fit:1000/1*u3du7-1WjwxlaFlF7Lv59g.gif",
+            "https://hms.harvard.edu/sites/default/files/2023-10/850-evolving-virus-gif-4-reversed.gif",
             width=200, 
         )
     
