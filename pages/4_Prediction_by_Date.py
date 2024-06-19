@@ -68,7 +68,7 @@ def main():
         st.write(df[df.isnull().any(axis=1)])
     
     # Convert date column to datetime and remove the time component
-    df['date'] = pd.to_datetime(df['date'], format='%m/%d/%Y', errors='coerce').dt.date
+    df['date'] = pd.to_datetime(df['date'], format='%Y-%m-%d', errors='coerce').dt.date
 
     # Display the full DataFrame
     st.write("Full Dataset:")
@@ -111,6 +111,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 
