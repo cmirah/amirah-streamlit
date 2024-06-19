@@ -165,6 +165,7 @@ def plot_results(ts, s_net, i_net, r_net, f_net, s_num, t):
 
 def main():
     st.title('SIR-F System Prediction using Neural Networks')
+    st.header('Figure: Network training flowchart:')
     st.image("cvd.png", width = 500)
     st.markdown("**<<<<< Select the epochs from the sidebar to train the model!**")
     st.sidebar.header('Configuration')
