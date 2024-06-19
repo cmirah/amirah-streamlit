@@ -124,6 +124,8 @@ def plot_results(ts, s_net, i_net, r_net, f_net, num_sol, t):
 
 def main():
     st.title('SIR-F System Prediction using Neural Networks')
+    st.write("""This demo shows the SIR-F ODE solved by **Artificial Neural Network**.
+    [Example coding from Python](https://colab.research.google.com/drive/1_B203tVr4qPcqCIOSt8WMK0YMFHHQo_2?usp=sharing).)""")
     st.markdown("**Network training flowchart:**")
     st.image("cvd.png", width=500)
     st.markdown("**<<<<< Adjust the epochs and neurons from the sidebar to train the model!**")
