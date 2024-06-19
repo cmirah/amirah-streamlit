@@ -39,7 +39,7 @@ def run():
         **👈 Select a demo from the sidebar** to explore the features of this app!
         """
     )
-    st.image(
+    st.sidebar.image(
             "https://hms.harvard.edu/sites/default/files/2023-10/850-evolving-virus-gif-4-reversed.gif",
             width=200, 
         )
