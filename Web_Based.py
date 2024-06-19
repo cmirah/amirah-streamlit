@@ -41,7 +41,7 @@ def run():
     )
     st.image(
             "https://miro.medium.com/v2/resize:fit:1000/1*u3du7-1WjwxlaFlF7Lv59g.gif",
-            width=50, 
+            width=200, 
         )
     
     st.header("More Information")
