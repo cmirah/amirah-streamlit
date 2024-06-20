@@ -12,3 +12,5 @@ tensorflow
 pillow
 torch
 neurodiffeq
+svr
+pyGRNN
