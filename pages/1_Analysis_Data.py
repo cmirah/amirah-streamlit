@@ -13,8 +13,8 @@ def run():
     (Data courtesy of the [MoH COVID-19 Data](https://github.com/MoH-Malaysia/covid19-public.git).)""")
 
     #image
-    st.image("covid_graph.jpg",width=500)
-
+    st.image("https://media0.giphy.com/media/Qu1fT51CG14ksIkASL/giphy.gif", width=500)
+    
     #title
     st.sidebar.success("Select an option above.")
 
