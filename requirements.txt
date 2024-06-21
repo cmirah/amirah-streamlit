@@ -8,9 +8,9 @@ seaborn
 scikit-learn
 plotly
 keras
-tensorflow
 pillow
 torch
 neurodiffeq
 svr
 pyGRNN
+tensorflow==2.11
