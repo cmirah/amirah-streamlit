@@ -1,5 +1,3 @@
-
-
 altair
 numpy
 pandas
@@ -15,5 +13,5 @@ torch
 neurodiffeq
 svr
 pyGRNN
-tensorflow==2.11
+
 
