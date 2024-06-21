@@ -13,6 +13,6 @@ torch
 neurodiffeq
 svr
 pyGRNN
-tensorflow==2.7.0
+tensorflow
 
 
