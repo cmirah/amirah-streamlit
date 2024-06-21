@@ -1,6 +1,4 @@
---extra-index-url https://pypi.org/simple
---trusted-host pypi.org
---trusted-host files.pythonhosted.org
+
 
 altair
 numpy
@@ -18,4 +16,4 @@ neurodiffeq
 svr
 pyGRNN
 tensorflow==2.11
-pip --upgrade
+
