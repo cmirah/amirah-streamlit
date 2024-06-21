@@ -14,3 +14,4 @@ neurodiffeq
 svr
 pyGRNN
 tensorflow==2.11
+--upgrade pip
