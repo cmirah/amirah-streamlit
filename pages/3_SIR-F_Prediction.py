@@ -130,7 +130,7 @@ def main():
     st.image("cvd.png", width=500)
     st.markdown("**<<<<< Adjust the epochs and neurons from the sidebar to train the model!**")
     st.sidebar.header('Configuration')
-    epochs = st.sidebar.slider('Number of Epochs', min_value=10, max_value=5000, value=1000, step=10)
+    epochs = st.sidebar.slider('Number of Epochs', min_value=0, max_value=5000, value=1000, step=10)
     neurons = st.sidebar.slider('Number of Neurons', min_value=16, max_value=128, value=32, step=16)
 
     st.sidebar.text('Training Configuration:')
