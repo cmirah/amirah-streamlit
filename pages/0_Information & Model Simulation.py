@@ -65,7 +65,7 @@ def modelSIRF(X0, beta, gamma, alpha1, alpha2, T, stepCount):
     def func(X):
         N = np.sum(X)
         f1 = -beta * X[0] * X[1] / N 
-        f2 = -(1 - alpha1) * beta * X[0] * X[1] / N - (gamma + alpha2) * X[1]
+        f2 = (1 - alpha1) * beta * X[0] * X[1] / N - (gamma + alpha2) * X[1]
         f3 = gamma * X[1]
         f4 = alpha1 * beta * X[0] * X[1] / N + alpha2 * X[1]
         return np.array([f1, f2, f3, f4])
