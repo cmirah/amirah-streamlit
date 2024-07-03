@@ -20,7 +20,10 @@ neurons = st.number_input('Enter the number of neurons:', min_value=1, value=50)
 time = st.number_input('Enter the time period for prediction:', min_value=1, value=160)
 
 # Define and train the neural network
-net = FCNN(n_input_units=1, n_output_units=4, n_hidden_units=neurons, n_hidden_layers=2, actv=torch.nn.Tanh)
+net_s = FCNN(n_input_units=1, n_output_units=1, n_hidden_units=neurons, n_hidden_layers=2, actv=torch.nn.Tanh)
+net_i = FCNN(n_input_units=1, n_output_units=1, n_hidden_units=neurons, n_hidden_layers=2, actv=torch.nn.Tanh)
+net_r = FCNN(n_input_units=1, n_output_units=1, n_hidden_units=neurons, n_hidden_layers=2, actv=torch.nn.Tanh)
+net_f = FCNN(n_input_units=1, n_output_units=1, n_hidden_units=neurons, n_hidden_layers=2, actv=torch.nn.Tanh)
 
 # Initial conditions for S, I, R, F
 initial_conditions = [
@@ -35,14 +38,14 @@ solver = Solver1D(
     conditions=initial_conditions,
     t_min=0.0,
     t_max=time,
-    nets=[net] * 4  # Using the same network for all variables
+    nets=[net_s, net_i, net_r, net_f]
 )
 
 # Train the network
 solver.fit(max_epochs=epochs)
 
 # Make predictions
-ts = torch.linspace(0, time, 100)
+ts = torch.linspace(0, time, 100).reshape(-1, 1)
 preds = solver.get_solution(ts, as_type='np')
 
 s_net, i_net, r_net, f_net = preds.T
