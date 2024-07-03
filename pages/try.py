@@ -7,8 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Define the SIR-F model
-def sir_f_ode(sirf, t, beta=0.3, gamma=0.1, mu=0.01):
-    S, I, R, F = sirf
+def sir_f_ode(t, S, I, R, F, beta=0.3, gamma=0.1, mu=0.01):
     dS_dt = -beta * S * I
     dI_dt = beta * S * I - gamma * I - mu * I
     dR_dt = gamma * I
