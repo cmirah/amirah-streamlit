@@ -24,17 +24,19 @@ time = st.number_input('Enter the time period for prediction:', min_value=1, val
 net = FCNN(n_input_units=1, n_output_units=4, n_hidden_units=neurons, n_hidden_layers=2, actv=torch.nn.Tanh)
 
 # Initial conditions for S, I, R, F
-initial_conditions = IVP(
-    t_0=0.0, 
-    x_0=[0.99, 0.01, 0.0, 0.0]  # Initial conditions: S0=0.99, I0=0.01, R0=0, F0=0
-)
+initial_conditions = [
+    IVP(t_0=0.0, x_0=0.99),  # Initial condition for S
+    IVP(t_0=0.0, x_0=0.01),  # Initial condition for I
+    IVP(t_0=0.0, x_0=0.0),   # Initial condition for R
+    IVP(t_0=0.0, x_0=0.0)    # Initial condition for F
+]
 
 solver = Solver1D(
     ode_system=sir_f_ode,
     conditions=initial_conditions,
     t_min=0.0,
     t_max=time,
-    nets=net
+    nets=[net] * 4  # Using the same network for all variables
 )
 
 # Train the network
@@ -63,4 +65,3 @@ plt.ylabel('Proportions')
 plt.title('SIR-F Model Predictions')
 plt.legend()
 st.pyplot(plt)
-
