@@ -7,7 +7,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Define the SIR-F model
-def sir_f_ode(sirf, t, beta, gamma, mu):
+def sir_f_ode(sirf, t, beta=0.3, gamma=0.1, mu=0.01):
     S, I, R, F = sirf
     dS_dt = -beta * S * I
     dI_dt = beta * S * I - gamma * I - mu * I
@@ -21,9 +21,13 @@ neurons = st.number_input('Enter the number of neurons:', min_value=1, value=50)
 time = st.number_input('Enter the time period for prediction:', min_value=1, value=160)
 
 # Define and train the neural network
-net = FCNN(n_input_units=1, n_hidden_units=neurons, n_hidden_layers=2, actv=torch.nn.Tanh)
+net = FCNN(n_input_units=1, n_output_units=4, n_hidden_units=neurons, n_hidden_layers=2, actv=torch.nn.Tanh)
 
-initial_conditions = IVP(t_0=0.0, x_0=[0.99, 0.01, 0.0, 0.0])  # Initial conditions: S0=0.99, I0=0.01, R0=0, F0=0
+# Initial conditions for S, I, R, F
+initial_conditions = IVP(
+    t_0=0.0, 
+    x_0=[0.99, 0.01, 0.0, 0.0]  # Initial conditions: S0=0.99, I0=0.01, R0=0, F0=0
+)
 
 solver = Solver1D(
     ode_system=sir_f_ode,
@@ -40,7 +44,7 @@ solver.fit(max_epochs=epochs)
 ts = torch.linspace(0, time, 100)
 preds = solver.get_solution(ts, as_type='np')
 
-s_net, i_net, r_net, f_net = preds
+s_net, i_net, r_net, f_net = preds.T
 
 # Display results
 st.write("Predicted S(t):", s_net)
