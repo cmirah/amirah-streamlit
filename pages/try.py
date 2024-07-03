@@ -46,9 +46,13 @@ solver.fit(max_epochs=epochs)
 
 # Make predictions
 ts = torch.linspace(0, time, 100).reshape(-1, 1)
-preds = solver.get_solution(ts, as_type='np')
+preds = solver.get_solution(ts)
 
-s_net, i_net, r_net, f_net = preds.T
+# Extracting predictions and converting to numpy
+s_net = preds[0].detach().numpy()
+i_net = preds[1].detach().numpy()
+r_net = preds[2].detach().numpy()
+f_net = preds[3].detach().numpy()
 
 # Display results
 st.write("Predicted S(t):", s_net)
