@@ -36,23 +36,23 @@ def implicit_euler(ode, y0, tspan, num_steps=10):
 
 def sirf_deriv(t, values):
     s, i, r, f = values
-    beta, gamma, alpha1, alpha2, N = 0.615, 0.193, 0.06, 0.03, 340000000
+    a, b, c, d, N = 0.05, 0.2, 0.06, 0.03, 1
 
-    dsdt = - beta * s * i / N
-    didt = - (1 - alpha1) * beta * s * i / N - (gamma + alpha2) * i
-    drdt = gamma * i
-    dfdt = alpha1 * beta * s * i / N - alpha2 * i
+    dsdt = - a * s * i / N
+    didt = (1 - c) * a * s * i / N - (b + d) * i
+    drdt = b * i
+    dfdt = c * a * s * i / N + d * i
 
     return np.array([dsdt, didt, drdt, dfdt])
 
 def neural_network(epochs, neurons, show_progress=False):
-    beta, gamma, alpha1, alpha2, N = 0.615, 0.193, 0.06, 0.03, 340000000
+    beta, gamma, alpha1, alpha2, N = 0.05, 0.2, 0.06, 0.03, 1
 
     sirf = lambda s, i, r, f, t : [
-        diff(s, t) + (- beta * s * i / N),
-        diff(i, t) + (- (1 - alpha1) * beta * s * i / N - (gamma + alpha2) * i),
+        diff(s, t) + (beta * s * i / N),
+        diff(i, t) - ((1 - alpha1) * beta * s * i / N - (gamma + alpha2) * i),
         diff(r, t) - (gamma * i),
-        diff(f, t) - (alpha1 * beta * s * i / N - alpha2 * i)
+        diff(f, t) - (alpha1 * beta * s * i / N + alpha2 * i)
     ]
 
     init_vals_sirf = [
