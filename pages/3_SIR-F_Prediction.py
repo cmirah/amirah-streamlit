@@ -81,12 +81,13 @@ def neural_network(epochs, neurons, show_progress=False):
     )
 
     if show_progress:
-        st.text('Training in progress...')
-    
-    solver.fit(max_epochs=epochs, callbacks=[monitor_callback])
-
-    if show_progress:
-        st.text('Training completed.')
+        progress_bar = st.progress(0)
+        for epoch in range(epochs):
+            solver.fit(max_epochs=1, callbacks=[monitor_callback])
+            progress_bar.progress((epoch + 1) / epochs)
+        progress_bar.empty()
+    else:
+        solver.fit(max_epochs=epochs, callbacks=[monitor_callback])
 
     solution_sirf = solver.get_solution()
     ts = np.linspace(0, 25, 100)
@@ -130,7 +131,7 @@ def main():
     st.image("cvd.png", width=500)
     st.markdown("**<<<<< Adjust the epochs and neurons from the sidebar to train the model!**")
     st.sidebar.header('Configuration')
-    st.sidebar.markdown('**[Higher number of Epochs & Neurons will be resulted to high accuracy but higher time-consuming.]**')
+    st.sidebar.markdown('**[Higher number of Epochs & Neurons will result in higher accuracy but be more time-consuming.]**')
     epochs = st.sidebar.slider('Number of Epochs', min_value=0, max_value=5000, value=1000, step=10)
     neurons = st.sidebar.slider('Number of Neurons', min_value=16, max_value=128, value=32, step=16)
 
@@ -156,3 +157,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
